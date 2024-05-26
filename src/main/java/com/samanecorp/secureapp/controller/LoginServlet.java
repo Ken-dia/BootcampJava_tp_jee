@@ -16,8 +16,8 @@ import java.util.Optional;
 public class LoginServlet extends HttpServlet {
     private LoginService loginService;
     Logger logger = LoggerFactory.getLogger(LoginServlet.class);
-    private final String LOGIN_PAGE = "/jsp/login.jsp";
-    private final String HOME_PAGE = "/jsp/welcome.jsp";
+    private final String LOGIN_PAGE = "jsp/login.jsp";
+    private final String HOME_PAGE = "jsp/welcome.jsp";
 
 
     // Commencer une transaction
@@ -38,13 +38,14 @@ public class LoginServlet extends HttpServlet {
     }
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        logger.info("POST request received");
         String email = req.getParameter("email");
         String password = req.getParameter("password");
         logger.info("Tentative de connexion avec {} et {}", email, password);
         try {
-            Optional<UserDTO> userDtoOptional = loginService.logException(email, password);
+            Optional<UserDTO> userDtoOptional = loginService.loginUser(email, password);
             UserDTO userDto = userDtoOptional.get();
-            req.getSession().setAttribute("user", userDto);
+            req.getSession().setAttribute("username", userDto);
             resp.sendRedirect(HOME_PAGE);
         } catch (Exception e){
             String message = "informations de connexion incorrect.";

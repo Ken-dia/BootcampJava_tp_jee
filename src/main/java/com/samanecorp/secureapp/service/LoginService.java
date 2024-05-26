@@ -37,11 +37,11 @@ public class LoginService {
         }
         return Optional.ofNullable(null);
     }
-    public Optional<UserDTO> log (String email, String password) {
+    public Optional<UserDTO> loginUser (String email, String password) {
 
         logger.info("Tentattive email : {} pwd : {}", email, password);
 
-        Optional<UserEntity> userEntityOption = loginDao.login(email, password);
+        Optional<UserEntity> userEntityOption = loginDao.loginUser(email, password);
         if (userEntityOption.isPresent()) {
             UserEntity userEntity = userEntityOption.get();
             UserDTO userDto = UserMapper.userEntityToUserDTO(userEntity);
@@ -64,15 +64,9 @@ public class LoginService {
                 }).orElseThrow( () -> new EntityNotFoundException("infos incorrect."));
     }
     public boolean save (UserDTO userDTO) {
-
         return userDao.addUser(UserMapper.userDtoToUserEntity(userDTO));
     }
-    public LoginDao getLoginDao() {
-        return loginDao;
-    }
-    public void setLoginDao(LoginDao loginDao) {
-        this.loginDao = loginDao;
-    }
+
 
 
 

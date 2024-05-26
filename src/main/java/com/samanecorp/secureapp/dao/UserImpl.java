@@ -34,7 +34,15 @@ public class UserImpl implements IUser{
 
     @Override
     public boolean addUser(UserEntity user) {
-        return false;
+        try {
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            session.save(user);
+            transaction.commit();
+            return true;
+        } catch (Exception e2) {
+            return false;
+        }
     }
 
     @Override

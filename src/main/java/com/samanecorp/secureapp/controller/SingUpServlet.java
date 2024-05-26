@@ -51,13 +51,16 @@ public class SingUpServlet extends HttpServlet {
      * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
      */
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
         String fistName = req.getParameter("first_name");
         String lastName = req.getParameter("last_name");
-        String email = req.getParameter("mail");
-        String password = req.getParameter("pwd");
+        String email = req.getParameter("email");
+        String password = req.getParameter("password");
+
         logger.info("Tentative d'inscription avec {}", email);
         String message = null;
         try {
+
             UserDTO userDTO = new UserDTO();
             userDTO.setFirstName(fistName);
             userDTO.setLastName(lastName);
